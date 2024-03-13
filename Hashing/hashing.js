@@ -66,6 +66,26 @@ in case of global scope 10^8
 */
 
 
+/*
+In order to hash number higher than 10^9 we need to use object in js/hashmap in java
+
+*/
+
+function usingObj(arr, query) {
+    let obj = {};
+    for(let i=0; i<arr.length; i++) {
+        if(obj[arr[i]] === undefined){
+            obj[arr[i]] = 0;
+        }
+        obj[arr[i]] += 1;
+    }
+    return obj[query];
+}
+
+
+// console.log(usingObj(arr, 1))
+
+
 
 
 /*
@@ -80,12 +100,96 @@ occerence.
 */
 
 function findStrOcurHash(str, query) {
-    let hashArr = new Array(26).fill(0);
+    /*256 because there are total of 256 character in ascii if there is no 
+    mention of small letter of capital letter in we must use 256 size array
+    if it is small case 'ch'-'a'
+    if it is capital case 'ch'-'A'
+    */
+    let hashArr = new Array(256).fill(0);
     for(let i=0; i<str.length; i++) {
-        hashArr[str.charCodeAt(i)-'a'.charCodeAt()] += 1;
+        hashArr[str.charCodeAt(i)] += 1;
     }
 
-    return hashArr[query.charCodeAt()-'a'.charCodeAt()];
+    return hashArr[query.charCodeAt()];
 }
 
-console.log(findStrOcurHash('abcdabefc', 'c'))
+// console.log(findStrOcurHash('abcdabefc', 'c'))
+
+
+// using js obj
+function usingStrObj(str, query) {
+    let obj = {};
+    for(let i=0; i<str.length; i++) {
+        if(obj[str.charCodeAt(i)] === undefined) {
+            obj[str.charCodeAt(i)] = 0;
+        }
+        obj[str.charCodeAt(i)] += 1;
+    }
+
+    return obj[query.charCodeAt()];
+}
+
+// console.log(usingStrObj('abcdabefc', 'c'))
+
+
+
+//example problem 1
+/*
+given input arr = [10,5,10,15,10,5];
+find the occerence of each element 
+output 
+10 3
+5  2
+15 1
+*/
+
+function findOcurPr1(arr) {
+    let obj = {};
+    for(let i=0; i<arr.length; i++) {
+        if(obj[arr[i]] === undefined) {
+            obj[arr[i]] = 0;
+        }
+        obj[arr[i]] += 1;
+    }
+    for(let key in obj) {
+        console.log(`${key}  ${obj[key]}`)
+    }
+}
+
+const arrPr1 = [10,5,10,15,10,5];
+// findOcurPr1(arrPr1)
+
+
+//find max and min frequency elements in the array
+function findMinMaxPr2(arr) {
+    let obj = {};
+    //we need separte varaible for one to store the max element(key) and one to store max frequency for calculation
+    let maxEle = 0;
+    let minEle = 0;
+    let maxFreq = 0;
+    
+    for(let i=0; i<arr.length; i++) {
+        if(obj[arr[i]] === undefined) {
+            obj[arr[i]] = 0;
+        }
+        obj[arr[i]] += 1;
+    }
+
+    //to find the min value we need some initial value from the same object
+    let minFreq = Object.values(obj)[0];
+    for(let key in obj) {
+        if(obj[key] > maxFreq) {
+            maxEle = key;
+            maxFreq = obj[key];
+        }
+        if(obj[key] < minFreq) {
+            minEle = key;
+            minFreq = obj[key];
+        }
+    }
+    return `${maxEle} ${minEle}`
+}
+
+const arrPr2 = [10,5,10,15,10,5];
+console.log(findMinMaxPr2(arrPr1))
+
