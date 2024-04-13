@@ -35,3 +35,22 @@ time complexity is O(N^2) for average and worst case
 for the best case considering the isSwap logic it will be O(N)
 space complexity is O(1)
 */
+
+
+//buble sort with recursive approach
+
+function recurBuble(arr, first, last) {
+    if(first >= last) return;
+    if(arr[first] > arr[first+1]) {
+        let temp = arr[first];
+        arr[first] = arr[first+1];
+        arr[first+1] = temp;
+    }
+    recurBuble(arr,first+1, last);
+    recurBuble(arr, 0, last-1);
+}
+
+
+recurBuble(arr,0, arr.length-1);
+
+console.log(arr);
